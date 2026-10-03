@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+
+{% block title %}Important Dates - LoveVault ❤️{% endblock %}
+
+{% block content %}
+<div class="container py-5 mt-5">
+    <div class="dashboard-header text-center mb-5">
+        <h1 class="display-4">📅 Important Dates</h1>
+        <p class="lead mt-3">The days that changed our lives forever.</p>
+        <button class="btn btn-primary mt-3 rounded-pill px-4" data-bs-toggle="modal" data-bs-target="#addDateModal">
+            Add Important Date ❤️
+        </button>
+    </div>
+
+    <!-- Add Date Modal -->
+    <div class="modal fade" id="addDateModal" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content glass-card border-0">
+          <div class="modal-header border-0 pb-0">
+            <h5 class="modal-title form-title">New Date</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <form method="POST" action="{{ url_for('features.dates') }}">
+                <div class="mb-3">
+                    <label class="form-label">Title</label>
+                    <input type="text" class="form-control" name="title" required placeholder="e.g. Our Anniversary">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Date</label>
+                    <input type="date" class="form-control" name="date" required>
+                </div>
+                <div class="mb-4">
+                    <label class="form-label">Type</label>
+                    <select class="form-select form-control" name="date_type">
+                        <option value="Anniversary">Anniversary</option>
+                        <option value="First Meeting">First Meeting</option>
+                        <option value="Birthday">Birthday</option>
+                        <option value="Special Day">Special Day</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary w-100 rounded-pill">Save Date</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    {% if dates %}
+    <div class="row g-4">
+        {% for date in dates %}
+        <div class="col-md-6 col-lg-4">
+            <div class="card dashboard-card">
+                <div class="card-body text-center">
+                    <div class="card-icon">💕</div>
+                    <h4 class="form-title">{{ date.title }}</h4>
+                    <p class="text-muted fw-bold">{{ date.date.strftime('%B %d, %Y') }}</p>
+                    <span class="badge bg-secondary rounded-pill px-3 py-2">{{ date.date_type }}</span>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="text-center mt-5">
+        <h3 class="text-muted">Add the dates that matter to your story. 📅❤️</h3>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

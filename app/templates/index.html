@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block title %}LoveVault ❤️ - Your Private Little World{% endblock %}
+
+{% block content %}
+<div class="landing-hero d-flex align-items-center justify-content-center text-center">
+    <div class="hero-content">
+        <h1 class="display-3 mb-4 hero-title">❤️ LoveVault</h1>
+        <p class="lead mb-3">“Your memories. Your moments. Your forever.”</p>
+        <p class="subtitle mb-5">“A private little world for two hearts.”</p>
+        <div class="d-grid gap-3 d-sm-flex justify-content-sm-center">
+            <a href="{{ url_for('auth.register') }}" class="btn btn-primary btn-lg px-4 gap-3 rounded-pill hero-btn">Create Your LoveVault</a>
+            <a href="{{ url_for('auth.login') }}" class="btn btn-outline-secondary btn-lg px-4 rounded-pill hero-btn-outline">Login</a>
+        </div>
+    </div>
+    
+    <!-- Floating hearts animation elements -->
+    <div class="floating-hearts">
+        <div class="heart h1">❤️</div>
+        <div class="heart h2">💕</div>
+        <div class="heart h3">✨</div>
+        <div class="heart h4">💖</div>
+        <div class="heart h5">🌹</div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,152 @@
+{% extends "base.html" %}
+
+{% block title %}Proposal - LoveVault ❤️{% endblock %}
+
+{% block head %}
+<style>
+    .proposal-container {
+        min-height: 70vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        text-align: center;
+        transition: all 0.5s ease;
+    }
+    
+    .proposal-step {
+        display: none;
+        animation: fadeIn 1s forwards;
+    }
+    
+    .proposal-step.active {
+        display: block;
+    }
+    
+    .btn-yes, .btn-no {
+        font-size: 1.5rem;
+        padding: 15px 40px;
+        border-radius: 50px;
+        margin: 10px;
+        font-weight: bold;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    
+    .btn-yes {
+        background-color: var(--primary-color);
+        color: white;
+        border: none;
+        box-shadow: 0 5px 15px rgba(255, 77, 109, 0.4);
+    }
+    .btn-yes:hover {
+        background-color: var(--primary-dark);
+        color: white;
+        transform: scale(1.1);
+    }
+    
+    .btn-no {
+        background-color: #f8f9fa;
+        color: #333;
+        border: 2px solid #ddd;
+        position: relative; /* So we can move it but keep it in flow nicely */
+    }
+    
+    .celebration-bg {
+        background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 99%, #fecfef 100%);
+    }
+    
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+    
+    .floating-hearts-celebration .heart {
+        font-size: 3rem;
+        animation-duration: 4s;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container py-5 mt-5 proposal-container" id="mainContainer">
+    
+    <div class="glass-card p-5 w-100" style="max-width: 600px;">
+        
+        <!-- Step 1 (Question) -->
+        <div class="proposal-step active" id="step1">
+            <h2 class="form-title mb-5" style="font-size: 3rem;">❤️ Will you be with me forever?</h2>
+            <div class="d-flex justify-content-center align-items-center flex-wrap" style="min-height: 150px; position: relative;">
+                <button class="btn-yes" onclick="celebrate()">YES ❤️</button>
+                <!-- Playful NO button -->
+                <button class="btn-no" id="btnNo" onmouseover="playfulMove(this)">NO 🙈</button>
+            </div>
+            <p class="text-muted mt-5 font-italic" id="noMessage" style="opacity: 0; transition: opacity 0.3s;">Think again ❤️</p>
+        </div>
+        
+        <!-- Celebration Step -->
+        <div class="proposal-step" id="step2">
+            <h1 class="display-2 form-title mb-4" style="animation: pulse 2s infinite;">🎉 I knew it! ❤️</h1>
+            <p class="lead playfair" style="font-size: 1.8rem; color: var(--primary-dark);">
+                "From this moment on, every tomorrow becomes a chapter we write together."
+            </p>
+            <div class="mt-5">
+                <a href="{{ url_for('dashboard.love_world') }}" class="btn btn-primary rounded-pill px-5 py-3 shadow-lg" style="font-size: 1.2rem;">Enter Love World ❤️</a>
+            </div>
+        </div>
+        
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    function nextStep(step) {
+        document.querySelectorAll('.proposal-step').forEach(el => el.classList.remove('active'));
+        document.getElementById('step' + step).classList.add('active');
+    }
+    
+    function playfulMove(btn) {
+        // Show playful message
+        document.getElementById('noMessage').style.opacity = '1';
+        
+        // Random playful movement that isn't impossible
+        const maxMove = 150; 
+        const randomX = (Math.random() - 0.5) * maxMove;
+        const randomY = (Math.random() - 0.5) * maxMove;
+        
+        // We use transform so the layout isn't destroyed
+        btn.style.transform = `translate(${randomX}px, ${randomY}px)`;
+        
+        const messages = ["Are you sure? 🥺", "Think again ❤️", "Maybe try YES? 😄"];
+        document.getElementById('noMessage').innerText = messages[Math.floor(Math.random() * messages.length)];
+        
+        // Reset transform after a moment so they can click it if they really want to (accessibility)
+        setTimeout(() => {
+            btn.style.transform = `translate(0px, 0px)`;
+        }, 2000);
+    }
+    
+    function celebrate() {
+        nextStep(2);
+        
+        // Add celebration background
+        document.body.classList.add('celebration-bg');
+        
+        // Add extra floating hearts dynamically
+        const heartsContainer = document.querySelector('.floating-hearts');
+        if (heartsContainer) {
+            heartsContainer.classList.add('floating-hearts-celebration');
+            for(let i = 0; i < 20; i++) {
+                const heart = document.createElement('div');
+                heart.className = 'heart';
+                const symbols = ['❤️', '🎉', '💖', '✨', '💍'];
+                heart.innerText = symbols[Math.floor(Math.random() * symbols.length)];
+                heart.style.left = Math.random() * 100 + '%';
+                heart.style.animationDelay = (Math.random() * 2) + 's';
+                heart.style.animationDuration = (Math.random() * 3 + 2) + 's';
+                heartsContainer.appendChild(heart);
+            }
+        }
+    }
+</script>
+{% endblock %}

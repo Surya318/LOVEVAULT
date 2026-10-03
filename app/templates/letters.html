@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block title %}Love Letters - LoveVault ❤️{% endblock %}
+
+{% block content %}
+<div class="container py-5 mt-5">
+    <div class="dashboard-header text-center mb-5">
+        <h1 class="display-4">💌 Love Letters</h1>
+        <p class="lead mt-3">Words left unsaid, safely kept here.</p>
+        <button class="btn btn-primary mt-3 rounded-pill px-4" data-bs-toggle="modal" data-bs-target="#addLetterModal">
+            Write a Letter 🖋️
+        </button>
+    </div>
+
+    <!-- Add Letter Modal -->
+    <div class="modal fade" id="addLetterModal" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content glass-card border-0">
+          <div class="modal-header border-0 pb-0">
+            <h5 class="modal-title form-title">Write a Love Letter</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <form method="POST" action="{{ url_for('features.letters') }}">
+                <div class="mb-3">
+                    <label class="form-label">Title</label>
+                    <input type="text" class="form-control" name="title" required placeholder="e.g. To my everything...">
+                </div>
+                <div class="mb-4">
+                    <label class="form-label">Content</label>
+                    <textarea class="form-control" name="content" rows="6" required placeholder="There are so many things I want to tell you..."></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary w-100 rounded-pill">Seal with a Kiss 💋</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    {% if letters %}
+    <div class="row g-4">
+        {% for letter in letters %}
+        <div class="col-md-6 col-lg-4">
+            <div class="card dashboard-card">
+                <div class="card-body text-center">
+                    <div class="card-icon" style="font-size: 4rem;">💌</div>
+                    <h4 class="form-title">{{ letter.title }}</h4>
+                    <p class="text-muted small">Written on {{ letter.created_at.strftime('%B %d, %Y') }}</p>
+                    <button class="btn btn-outline-primary btn-sm rounded-pill mt-2" onclick="alert('Letter Feature Coming Soon to open envelopes beautifully!')">Open Letter</button>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="text-center mt-5">
+        <h3 class="text-muted">Your first love letter is waiting to be written. 💌</h3>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

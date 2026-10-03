@@ -1,0 +1,93 @@
+{% extends "base.html" %}
+
+{% block title %}Our Journey - LoveVault ❤️{% endblock %}
+
+{% block content %}
+<div class="container py-5 mt-5">
+    <div class="dashboard-header text-center mb-5">
+        <h1 class="display-4">🧭 Our Journey</h1>
+        <p class="lead mt-3">From the very beginning to our forever.</p>
+        <button class="btn btn-primary mt-3 rounded-pill px-4" data-bs-toggle="modal" data-bs-target="#addEventModal">
+            Add Timeline Event 📌
+        </button>
+    </div>
+
+    <!-- Add Timeline Event Modal -->
+    <div class="modal fade" id="addEventModal" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content glass-card border-0">
+          <div class="modal-header border-0 pb-0">
+            <h5 class="modal-title form-title">New Event</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <form method="POST" action="{{ url_for('features.timeline') }}">
+                <div class="mb-3">
+                    <label class="form-label">Title</label>
+                    <input type="text" class="form-control" name="title" required placeholder="e.g. First Meeting">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Date</label>
+                    <input type="date" class="form-control" name="date" required>
+                </div>
+                <div class="mb-4">
+                    <label class="form-label">Description</label>
+                    <textarea class="form-control" name="description" rows="3" placeholder="Tell the story of this moment..."></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary w-100 rounded-pill">Add to Journey</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    {% if events %}
+    <div class="timeline-container mt-5 position-relative">
+        <!-- Vertical Line -->
+        <div class="timeline-line" style="position: absolute; left: 50%; width: 4px; height: 100%; background: var(--primary-light); transform: translateX(-50%); border-radius: 4px;"></div>
+        
+        <div class="text-center mb-5 position-relative z-1">
+            <span class="badge rounded-pill bg-primary fs-5 px-4 py-2">❤️ The Beginning</span>
+        </div>
+        
+        {% for event in events %}
+        <div class="row align-items-center justify-content-between mb-5 position-relative z-1">
+            {% if loop.index % 2 == 1 %}
+                <div class="col-md-5 text-end pe-4">
+                    <div class="glass-card p-4 text-start d-inline-block w-100" style="border-right: 4px solid var(--primary-color);">
+                        <h4 class="form-title text-primary">{{ event.title }}</h4>
+                        <p class="text-muted mb-2 fw-bold">{{ event.event_date.strftime('%B %d, %Y') }}</p>
+                        <p class="mb-0">{{ event.description }}</p>
+                    </div>
+                </div>
+                <div class="col-md-2 text-center">
+                    <div class="rounded-circle bg-white border border-4 border-primary d-inline-flex align-items-center justify-content-center shadow" style="width: 24px; height: 24px;"></div>
+                </div>
+                <div class="col-md-5"></div>
+            {% else %}
+                <div class="col-md-5"></div>
+                <div class="col-md-2 text-center">
+                    <div class="rounded-circle bg-white border border-4 border-primary d-inline-flex align-items-center justify-content-center shadow" style="width: 24px; height: 24px;"></div>
+                </div>
+                <div class="col-md-5 ps-4">
+                    <div class="glass-card p-4 w-100" style="border-left: 4px solid var(--primary-color);">
+                        <h4 class="form-title text-primary">{{ event.title }}</h4>
+                        <p class="text-muted mb-2 fw-bold">{{ event.event_date.strftime('%B %d, %Y') }}</p>
+                        <p class="mb-0">{{ event.description }}</p>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+        {% endfor %}
+        
+        <div class="text-center mt-5 position-relative z-1 pb-5">
+            <span class="badge rounded-pill bg-secondary fs-5 px-4 py-2 text-white">❤️ Our Story Continues...</span>
+        </div>
+    </div>
+    {% else %}
+    <div class="text-center mt-5">
+        <h3 class="text-muted">Start mapping your beautiful journey together. 🧭</h3>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

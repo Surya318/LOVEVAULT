@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block title %}Settings - LoveVault ❤️{% endblock %}
+
+{% block content %}
+<div class="container py-5 mt-5">
+    <div class="dashboard-header text-center mb-5">
+        <h1 class="display-4">⚙️ Settings</h1>
+        <p class="lead mt-3">Manage your private love vault.</p>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="glass-card p-5">
+                <h4 class="form-title mb-4">Account Information</h4>
+                <p><strong>Username:</strong> {{ user.username }}</p>
+                <p><strong>Display Name:</strong> {{ user.display_name or 'Not set' }}</p>
+                <p><strong>Account Created:</strong> {{ user.created_at.strftime('%B %d, %Y') }}</p>
+                
+                <hr class="my-4">
+                
+                <h4 class="form-title mb-4">Change Passcode</h4>
+                <form method="POST" action="{{ url_for('features.settings') }}">
+                    <div class="mb-3">
+                        <label class="form-label">Current Passcode</label>
+                        <input type="password" class="form-control" name="current_password">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">New Passcode</label>
+                        <input type="password" class="form-control" name="new_password">
+                    </div>
+                    <div class="mb-4">
+                        <label class="form-label">Confirm New Passcode</label>
+                        <input type="password" class="form-control" name="confirm_password">
+                    </div>
+                    <button type="submit" class="btn btn-primary rounded-pill px-4">Update Passcode 🔐</button>
+                </form>
+
+                <hr class="my-4">
+
+                <h4 class="form-title mb-4">Login Devices</h4>
+                <div class="alert alert-info">
+                    <i class="fas fa-desktop me-2"></i> Current Device (Windows) - Active now<br>
+                    <small class="text-muted">Last login: Just now</small>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

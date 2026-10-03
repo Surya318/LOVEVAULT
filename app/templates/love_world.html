@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+
+{% block title %}Love World - LoveVault ❤️{% endblock %}
+
+{% block content %}
+<div class="container py-5 mt-5">
+    <div class="dashboard-header text-center mb-5">
+        <h1 class="display-4">❤️ LoveVault</h1>
+        <h3 class="mt-3">Welcome, {{ user.display_name or user.username }} ❤️</h3>
+        <p class="lead mt-3 quote-container">"Every love story has a beginning, ours has memories."</p>
+    </div>
+
+    <div class="row g-4 justify-content-center">
+        
+        <!-- 1. Proposal -->
+        <div class="col-md-4 col-sm-6">
+            <a href="{{ url_for('features.proposal') }}" class="text-decoration-none">
+                <div class="card dashboard-card text-center p-4">
+                    <div class="card-icon">💍</div>
+                    <h4>Proposal</h4>
+                    <p class="text-muted">A special question waiting for you. ✨</p>
+                </div>
+            </a>
+        </div>
+
+        <!-- 2. Journey -->
+        <div class="col-md-4 col-sm-6">
+            <a href="{{ url_for('features.timeline') }}" class="text-decoration-none">
+                <div class="card dashboard-card text-center p-4">
+                    <div class="card-icon" style="animation: pulse 2s infinite;">🧭</div>
+                    <h4>Journey</h4>
+                    <p class="text-muted">The beautiful timeline of our forever. ❤️</p>
+                </div>
+            </a>
+        </div>
+        
+        <!-- 3. Love Letters -->
+        <div class="col-md-4 col-sm-6">
+            <a href="{{ url_for('features.letters') }}" class="text-decoration-none">
+                <div class="card dashboard-card text-center p-4">
+                    <div class="card-icon">💌</div>
+                    <h4>Love Letters</h4>
+                    <p class="text-muted">Words written just for you. 💋</p>
+                </div>
+            </a>
+        </div>
+
+        <!-- 4. Memories -->
+        <div class="col-md-4 col-sm-6">
+            <a href="{{ url_for('features.memories') }}" class="text-decoration-none">
+                <div class="card dashboard-card text-center p-4">
+                    <div class="card-icon">📸</div>
+                    <h4>Memories</h4>
+                    <p class="text-muted">Moments we've frozen in time. 💕</p>
+                </div>
+            </a>
+        </div>
+        
+        <!-- 5. Surprises -->
+        <div class="col-md-4 col-sm-6">
+            <a href="{{ url_for('features.surprises') }}" class="text-decoration-none">
+                <div class="card dashboard-card text-center p-4">
+                    <div class="card-icon">🎁</div>
+                    <h4>Surprises</h4>
+                    <p class="text-muted">Secret gifts waiting to be unlocked. 🔒</p>
+                </div>
+            </a>
+        </div>
+
+        <!-- 6. Important Dates -->
+        <div class="col-md-4 col-sm-6">
+            <a href="{{ url_for('features.dates') }}" class="text-decoration-none">
+                <div class="card dashboard-card text-center p-4">
+                    <div class="card-icon">📅</div>
+                    <h4>Important Dates</h4>
+                    <p class="text-muted">Days that changed our lives. 🌹</p>
+                </div>
+            </a>
+        </div>
+
+    </div>
+</div>
+{% endblock %}

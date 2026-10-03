@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+
+{% block title %}Our Memories - LoveVault ❤️{% endblock %}
+
+{% block content %}
+<div class="container py-5 mt-5">
+    <div class="dashboard-header text-center mb-5">
+        <h1 class="display-4">📸 Our Memories</h1>
+        <p class="lead mt-3">Every picture tells our story.</p>
+        <button class="btn btn-primary mt-3 rounded-pill px-4" data-bs-toggle="modal" data-bs-target="#addMemoryModal">
+            Add New Memory ❤️
+        </button>
+    </div>
+
+    <!-- Add Memory Modal -->
+    <div class="modal fade" id="addMemoryModal" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content glass-card border-0">
+          <div class="modal-header border-0 pb-0">
+            <h5 class="modal-title form-title">New Memory</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <form method="POST" action="{{ url_for('features.memories') }}" enctype="multipart/form-data">
+                <div class="mb-3">
+                    <label class="form-label">Title</label>
+                    <input type="text" class="form-control" name="title" required placeholder="e.g. Our First Trip">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Date</label>
+                    <input type="date" class="form-control" name="date" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Photo (Optional)</label>
+                    <input type="file" class="form-control" name="image" accept="image/*">
+                </div>
+                <div class="mb-4">
+                    <label class="form-label">Description</label>
+                    <textarea class="form-control" name="description" rows="3" placeholder="Write something sweet..."></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary w-100 rounded-pill">Save Memory</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    {% if memories %}
+    <div class="row g-4">
+        {% for memory in memories %}
+        <div class="col-md-4">
+            <div class="card dashboard-card p-0">
+                {% if memory.image_path %}
+                <img src="{{ url_for('static', filename='images/uploads/' + memory.image_path) }}" class="card-img-top" alt="Memory Photo" style="height: 200px; object-fit: cover;">
+                {% else %}
+                <div class="bg-light d-flex align-items-center justify-content-center" style="height: 200px;">
+                    <i class="fas fa-camera text-muted" style="font-size: 3rem; opacity: 0.2;"></i>
+                </div>
+                {% endif %}
+                <div class="card-body text-center p-4">
+                    <h4 class="form-title">{{ memory.title }}</h4>
+                    <p class="text-muted small"><i class="fas fa-calendar-alt me-2"></i>{{ memory.memory_date.strftime('%B %d, %Y') if memory.memory_date else 'No Date' }}</p>
+                    <p>{{ memory.description }}</p>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="text-center mt-5">
+        <h3 class="text-muted">Your story is waiting for its first memory. 📸❤️</h3>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

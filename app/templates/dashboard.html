@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block title %}Home - LoveVault ❤️{% endblock %}
+
+{% block head %}
+<style>
+.fade-in-art {
+    animation: fadeInArt 3s ease-in-out forwards;
+    opacity: 0;
+}
+@keyframes fadeInArt {
+    0% { opacity: 0; transform: scale(0.95); }
+    100% { opacity: 1; transform: scale(1); }
+}
+.line-art-svg {
+    max-width: 300px;
+    width: 100%;
+    margin-bottom: 2rem;
+    filter: drop-shadow(0px 10px 15px rgba(0,0,0,0.05));
+}
+.line-art-path {
+    stroke: #222;
+    stroke-width: 2;
+    fill: none;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    /* Optional drawing animation */
+    stroke-dasharray: 2000;
+    stroke-dashoffset: 2000;
+    animation: drawArt 4s ease-in-out forwards;
+}
+@keyframes drawArt {
+    to { stroke-dashoffset: 0; }
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container py-5 mt-5 d-flex flex-column align-items-center justify-content-center text-center fade-in-art" style="min-height: 80vh;">
+    
+    <!-- Minimalist Continuous Line Art SVG (Boy & Girl Kissing) -->
+    <svg viewBox="0 0 512 512" class="line-art-svg" xmlns="http://www.w3.org/2000/svg">
+        <path class="line-art-path" d="M220,180 C200,160 170,160 150,180 C130,200 130,230 150,250 C160,260 180,280 200,300 C210,310 220,330 220,350 C220,390 200,420 180,440 M220,350 C230,360 250,380 280,380 C310,380 340,360 360,330 C380,300 380,250 360,220 C350,200 320,180 290,180 C270,180 250,190 235,210 C225,225 210,230 190,220 C180,215 170,220 165,230 C160,240 165,255 175,265 C190,280 210,285 230,275 C250,265 260,245 255,225" />
+        <path class="line-art-path" d="M280,380 C290,410 320,440 350,440" />
+        <!-- Abstract Face Profiles Interlocking -->
+        <path class="line-art-path" d="M250,100 C270,90 300,90 320,110 C340,130 340,160 320,180 C300,200 290,220 290,240 C290,260 300,280 320,300 M250,100 C230,90 200,90 180,110 C160,130 160,160 180,180 C200,200 210,220 210,240 C210,250 205,260 195,270 C185,280 180,300 185,320" />
+    </svg>
+
+    <h1 class="display-3 form-title mb-4">Welcome, {{ user.display_name or user.username }} ❤️</h1>
+    <p class="lead quote-container mb-5" style="font-size: 1.5rem;">"Every love story is beautiful, but ours is my favorite."</p>
+
+    <!-- The Single Arrow / Button to Proposal -->
+    <div class="mt-4">
+        <a href="{{ url_for('features.proposal') }}" class="btn btn-primary rounded-circle shadow-lg d-flex align-items-center justify-content-center mx-auto" style="width: 80px; height: 80px; transition: transform 0.3s; text-decoration: none;" onmouseover="this.style.transform='scale(1.1) translateX(10px)'" onmouseout="this.style.transform='scale(1)'">
+            <i class="fas fa-arrow-right" style="font-size: 2rem; color: white;"></i>
+        </a>
+        <p class="text-muted mt-3 font-italic">Continue...</p>
+    </div>
+
+</div>
+{% endblock %}

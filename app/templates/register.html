@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block title %}Register - LoveVault ❤️{% endblock %}
+
+{% block content %}
+<div class="container d-flex justify-content-center align-items-center min-vh-100 py-5">
+    <div class="auth-card card p-4 shadow-sm">
+        <div class="card-body">
+            <h2 class="text-center mb-4 form-title">Create Your LoveVault</h2>
+            <form method="POST" action="{{ url_for('auth.register') }}">
+                <div class="mb-3">
+                    <label for="username" class="form-label">Username</label>
+                    <input type="text" class="form-control" id="username" name="username" required>
+                </div>
+                <div class="mb-3">
+                    <label for="display_name" class="form-label">Display Name (Optional)</label>
+                    <input type="text" class="form-control" id="display_name" name="display_name">
+                </div>
+                <div class="mb-3">
+                    <label for="password" class="form-label">Password</label>
+                    <input type="password" class="form-control" id="password" name="password" required>
+                </div>
+                <div class="mb-4">
+                    <label for="confirm_password" class="form-label">Confirm Password</label>
+                    <input type="password" class="form-control" id="confirm_password" name="confirm_password" required>
+                </div>
+                <div class="mb-4 form-check">
+                    <input type="checkbox" class="form-check-input" id="age_check" name="age_check" required>
+                    <label class="form-check-label text-muted small" for="age_check">I confirm that I am at least 13 years old to use this service.</label>
+                </div>
+                <div class="d-grid">
+                    <button type="submit" class="btn btn-primary rounded-pill">Create Account ❤️</button>
+                </div>
+            </form>
+            <div class="text-center mt-4">
+                <p>Already have an account? <a href="{{ url_for('auth.login') }}" class="text-decoration-none custom-link">Login here</a></p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
